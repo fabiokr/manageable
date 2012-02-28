@@ -95,11 +95,14 @@ module Manageable
       options[:class] ||= ""
       options[:class].strip!
 
+      options[:ul_class] ||= "wat-cf"
+      options[:ul_class].strip!
+
       menu = Helpers::NavigationBuilder.new
       yield menu if block_given?
 
       content_tag("div", options) do
-        content_tag("ul", "", :class => "wat-cf") do
+        content_tag("ul", "", :class => options[:ul_class]) do
           menu.collect { |item|
             content_tag("li", :class => item[:class]) do
               link_to(item[:label], item[:href], item[:link_options])
