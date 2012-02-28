@@ -210,11 +210,16 @@ module Manageable
     end
 
     def user_navigation(menu)
-       menu.item "reimplement user_navigation", "#"
+      menu.item image_tag("manageable/session/home.png", :alt => "Dashboard", :"original-title" => "Dashboard"), "#"
+      menu.item image_tag("manageable/session/account.png", :alt => "Profile", :"original-title" => "Profile"), "#"
+      menu.item image_tag("manageable/session/config.png", :alt => "Preferences", :"original-title" => "Preferences"), "#"
+      menu.item image_tag("manageable/session/logout.png", :alt => "Logout", :"original-title" => "Logout"), "#"
     end
 
     def main_navigation(menu)
-       menu.item "reimplement main_navigation", "#"
+       menu.item "Main Page", "#"
+       menu.item "Active", "#", :class => "active"
+       menu.item "Login", "#"
     end
   end
 end
