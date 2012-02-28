@@ -29,7 +29,7 @@ module Manageable
     #   <% end %>
     #
     # Returns the completed box, yields an instance of Helpers::BoxBuilder.
-    def content_box(options = {}, &block)
+    def manageable_content_box(options = {}, &block)
       box_buffer = Helpers::BoxBuilder.new(self)
       box_content = capture(box_buffer, &block)
 
@@ -62,7 +62,7 @@ module Manageable
     #   # => "Hello, world!"
     #
     # Returns the page title, first setting it if title is not nil.
-    def page_title(title = nil)
+    def manageable_page_title(title = nil)
       @title = title unless title.nil?
       @title || "Untitled Page"
     end
@@ -80,7 +80,7 @@ module Manageable
     #   # => image_tag("/assets/manageable/icons/32x32/new_item.png, :alt => "New Item")
     #
     # Returns an image tag, ready to be displayed in a template.
-    def icon(name, size = :small, options = {})
+    def manageable_icon(name, size = :small, options = {})
       return "" if name.nil?
 
       dimension = ( (size == :small) ? "16" : "32" ).html_safe
@@ -91,7 +91,7 @@ module Manageable
       })
     end
 
-    def navigation(options = {}, &block)
+    def manageable_navigation(options = {}, &block)
       options[:class] ||= ""
       options[:class].strip!
 
@@ -126,11 +126,11 @@ module Manageable
     #   </div>
     #
     # Returns a secondary navigation block to be displayed.
-    def secondary_navigation(options = {}, &block)
+    def manageable_secondary_navigation(options = {}, &block)
       options[:class] ||= ""
       options[:class] << " secondary-navigation"
 
-      navigation(options, &block)
+      manageable_navigation(options, &block)
     end
 
     # Creates a set of buttons
@@ -148,7 +148,7 @@ module Manageable
     #   </div>
     #
     # Returns a set of controls to be displayed.
-    def controls(options = {})
+    def manageable_controls(options = {})
       options[:class] ||= ""
       options[:class] << " control"
       options[:class].strip!
@@ -182,7 +182,7 @@ module Manageable
     #   </div>
     #
     # Returns the breadcrumb trail.
-    def breadcrumbs(options = {})
+    def manageable_breadcrumbs(options = {})
       items = Helpers::NavigationBuilder.new
       yield items if block_given?
 
@@ -205,7 +205,11 @@ module Manageable
       end
     end
 
-    def sidebar
+    def manageable_head
+      content_for(:head)
+    end
+
+    def manageable_sidebar
       content_for(:sidebar)
     end
 
@@ -213,14 +217,18 @@ module Manageable
       content_tag(:h1, "Manageable")
     end
 
-    def user_navigation(menu)
+    def manageable_footer
+      content_tag(:p, "Manageable - Activo Theme by David Francisco / hello@dmfranc.com / activo.dmfranc.com")
+    end
+
+    def manageable_user_navigation(menu)
       menu.item image_tag("manageable/session/home.png", :alt => "Dashboard", :"original-title" => "Dashboard"), "#"
       menu.item image_tag("manageable/session/account.png", :alt => "Profile", :"original-title" => "Profile"), "#"
       menu.item image_tag("manageable/session/config.png", :alt => "Preferences", :"original-title" => "Preferences"), "#"
       menu.item image_tag("manageable/session/logout.png", :alt => "Logout", :"original-title" => "Logout"), "#"
     end
 
-    def main_navigation(menu)
+    def manageable_main_navigation(menu)
        menu.item "Main Page", "#"
        menu.item "Active", "#", :class => "active"
        menu.item "Login", "#"

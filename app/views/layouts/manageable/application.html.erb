@@ -2,38 +2,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title><%= content_for?(:title) ? yield(:title) : page_title %></title>
-
+  <title><%= content_for?(:title) ? yield(:title) : manageable_page_title %></title>
   <%= stylesheet_link_tag "manageable.css", :media => "screen" %>
-  <%= javascript_include_tag 'manageable.js' %>
   <%= csrf_meta_tag %>
-
-  <%= head if respond_to? :head %>
-  <%= yield :head %>
+  <%= manageable_head %>
 </head>
 
 <body>
   <div id="container">
     <div id="header">
       <%= manageable_logo %>
-      <%= navigation(:id => "user-navigation") { |nav| user_navigation(nav) } if respond_to?(:user_navigation) %>
-      <%= navigation(:id => "main-navigation") { |nav| main_navigation(nav) } if respond_to?(:main_navigation) %>
+      <%= manageable_navigation(:id => "user-navigation") { |nav| manageable_user_navigation(nav) } %>
+      <%= manageable_navigation(:id => "main-navigation") { |nav| manageable_main_navigation(nav) } %>
     </div>
     <div id="wrapper" class="wat-cf">
-      <div id="<%= sidebar.present? ? 'main' : 'full-main' %>">
+      <div id="<%= manageable_sidebar.present? ? 'main' : 'full-main' %>">
         <div class="flash">
           <% [ :warning, :notice, :error ].each do |f| -%>
             <%= content_tag("div", "<p>#{flash[f]}</p>".html_safe, :class => "message #{f}") unless flash[f].nil? %>
           <% end %>
         </div>
+
         <%= yield %>
+
+        <div id="footer">
+          <%= manageable_footer %>
+        </div>
       </div>
-      <% if sidebar.present? %>
+      <% if manageable_sidebar.present? %>
         <div id="sidebar">
-          <%= sidebar %>
+          <%= manageable_sidebar %>
         </div>
       <% end %>
     </div>
   </div>
+
+  <%= javascript_include_tag 'manageable.js' %>
 </body>
 </html>
