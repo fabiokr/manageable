@@ -15,8 +15,7 @@
 <body>
   <div id="container">
     <div id="header">
-      <%= content_tag("div", status_menu, :id => "status") if respond_to? :status_menu %>
-      <h1><a href="index.html"></a></h1>
+      <%= manageable_logo %>
       <%= navigation(:id => "user-navigation") { |nav| user_navigation(nav) } if respond_to?(:user_navigation) %>
       <%= navigation(:id => "main-navigation") { |nav| main_navigation(nav) } if respond_to?(:main_navigation) %>
     </div>

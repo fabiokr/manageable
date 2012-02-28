@@ -209,6 +209,10 @@ module Manageable
       content_for(:sidebar)
     end
 
+    def manageable_logo
+      content_tag(:h1, "Manageable")
+    end
+
     def user_navigation(menu)
       menu.item image_tag("manageable/session/home.png", :alt => "Dashboard", :"original-title" => "Dashboard"), "#"
       menu.item image_tag("manageable/session/account.png", :alt => "Profile", :"original-title" => "Profile"), "#"
