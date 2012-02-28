@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title><%= content_for?(:title) ? yield(:title) : page_title %></title>
+
+  <%= stylesheet_link_tag "manageable.css", :media => "screen" %>
+  <%= javascript_include_tag 'manageable.js' %>
+  <%= csrf_meta_tag %>
+
+  <%= head if respond_to? :head %>
+  <%= yield :head %>
+</head>
+
+<body>
+  <div id="container">
+    <div id="header">
+      <%= content_tag("div", status_menu, :id => "status") if respond_to? :status_menu %>
+      <h1><a href="index.html"></a></h1>
+      <%= navigation(:id => "user-navigation") { |n| user_navigation(n) } if respond_to?(:user_navigation) %>
+      <%= navigation(:id => "main-navigation") { |n| main_navigation(n) } if respond_to?(:main_navigation) %>
+    </div>
+    <div id="wrapper" class="wat-cf">
+      <div id="<%= @full_width ? 'full-main' : 'main' %>">
+        <div class="flash">
+          <% [ :warning, :notice, :error ].each do |f| -%>
+            <%= content_tag("div", "<p>#{flash[f]}</p>".html_safe, :class => "message #{f}") unless flash[f].nil? %>
+          <% end %>
+        </div>
+        <%= yield %>
+      </div>
+      <% if respond_to? :sidebar %>
+        <div id="sidebar">
+          <%= sidebar %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</body>
+</html>
