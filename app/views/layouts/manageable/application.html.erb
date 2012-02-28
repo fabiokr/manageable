@@ -17,11 +17,11 @@
     <div id="header">
       <%= content_tag("div", status_menu, :id => "status") if respond_to? :status_menu %>
       <h1><a href="index.html"></a></h1>
-      <%= navigation(:id => "user-navigation") { |n| user_navigation(n) } if respond_to?(:user_navigation) %>
-      <%= navigation(:id => "main-navigation") { |n| main_navigation(n) } if respond_to?(:main_navigation) %>
+      <%= navigation(:id => "user-navigation") { |nav| user_navigation(nav) } if respond_to?(:user_navigation) %>
+      <%= navigation(:id => "main-navigation") { |nav| main_navigation(nav) } if respond_to?(:main_navigation) %>
     </div>
     <div id="wrapper" class="wat-cf">
-      <div id="<%= @full_width ? 'full-main' : 'main' %>">
+      <div id="<%= sidebar.present? ? 'main' : 'full-main' %>">
         <div class="flash">
           <% [ :warning, :notice, :error ].each do |f| -%>
             <%= content_tag("div", "<p>#{flash[f]}</p>".html_safe, :class => "message #{f}") unless flash[f].nil? %>
@@ -29,7 +29,7 @@
         </div>
         <%= yield %>
       </div>
-      <% if respond_to? :sidebar %>
+      <% if sidebar.present? %>
         <div id="sidebar">
           <%= sidebar %>
         </div>

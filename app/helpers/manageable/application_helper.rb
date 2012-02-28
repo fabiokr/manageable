@@ -204,5 +204,17 @@ module Manageable
         end
       end
     end
+
+    def sidebar
+      content_for(:sidebar)
+    end
+
+    def user_navigation(menu)
+       menu.item "reimplement user_navigation", "#"
+    end
+
+    def main_navigation(menu)
+       menu.item "reimplement main_navigation", "#"
+    end
   end
 end

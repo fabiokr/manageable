@@ -15,27 +15,27 @@ http://pixelmatrixdesign.com/uniform/themer.html
 
 /* Global Declaration */
 
-div.selector, 
-div.selector span, 
+div.selector,
+div.selector span,
 div.checker span,
-div.radio span, 
-div.uploader, 
+div.radio span,
+div.uploader,
 div.uploader span.action,
 div.button,
 div.button span {
-  background-image: url('<%= asset_path 'activo-rails/sprite.png' %>');
+  background-image: url('<%= asset_path 'manageable/sprite.png' %>');
   background-repeat: no-repeat;
   -webkit-font-smoothing: antialiased;
 }
 
-.selector, 
-.radio, 
-.checker, 
+.selector,
+.radio,
+.checker,
 .uploader,
-.button, 
-.selector *, 
-.radio *, 
-.checker *, 
+.button,
+.selector *,
+.radio *,
+.checker *,
 .uploader *,
 .button *{
   margin: 0;
@@ -45,7 +45,7 @@ div.button span {
 /* INPUT & TEXTAREA */
 
 input.text,
-input.email, 
+input.email,
 input.password,
 textarea.uniform {
   font-size: 12px;
@@ -53,8 +53,8 @@ textarea.uniform {
   font-weight: normal;
   padding: 3px;
   color: #777;
-  background: url('<%= asset_path 'activo-rails/bg-input-focus.png' %>') repeat-x 0px 0px;
-  background: url('<%= asset_path 'activo-rails/bg-input.png' %>') repeat-x 0px 0px;
+  background: url('<%= asset_path 'manageable/bg-input-focus.png' %>') repeat-x 0px 0px;
+  background: url('<%= asset_path 'manageable/bg-input.png' %>') repeat-x 0px 0px;
   border-top: solid 1px #aaa;
   border-left: solid 1px #aaa;
   border-bottom: solid 1px #ccc;
@@ -73,7 +73,7 @@ textarea.uniform:focus {
   -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.3);
   box-shadow: 0px 0px 4px rgba(0,0,0,0.3);
   border-color: #999;
-  background: url('<%= asset_path 'activo-rails/bg-input-focus.png' %>') repeat-x 0px 0px;
+  background: url('<%= asset_path 'manageable/bg-input-focus.png' %>') repeat-x 0px 0px;
 }
 
 /* SPRITES */
@@ -98,12 +98,12 @@ div.selector select {
   left: 0px;
 }
 
-div.selector:active, 
+div.selector:active,
 div.selector.active {
   background-position: -483px -156px;
 }
 
-div.selector:active span, 
+div.selector:active span,
 div.selector.active span {
   background-position: right -26px;
 }
@@ -156,7 +156,7 @@ div.checker span {
   width: 19px;
 }
 
-div.checker:active span, 
+div.checker:active span,
 div.checker.active span {
   background-position: -19px -260px;
 }
@@ -177,7 +177,7 @@ div.checker span.checked {
   background-position: -76px -260px;
 }
 
-div.checker:active span.checked, 
+div.checker:active span.checked,
 div.checker.active span.checked {
   background-position: -95px -260px;
 }
@@ -224,12 +224,12 @@ div.radio span {
   background-position: 0px -279px;
 }
 
-div.radio:active span, 
+div.radio:active span,
 div.radio.active span {
   background-position: -18px -279px;
 }
 
-div.radio.focus span, 
+div.radio.focus span,
 div.radio:hover span {
   background-position: -36px -279px;
 }
@@ -254,7 +254,7 @@ div.radio.focus span.checked, div.radio:hover span.checked {
   background-position: -108px -279px;
 }
 
-div.radio.focus:active span.checked, 
+div.radio.focus:active span.checked,
 div.radio:hover:active span.checked,
 div.radio.focus.active span.checked,
 div.radio.active:hover span.checked {
@@ -344,7 +344,7 @@ div.button.focus span,
 div.button:focus span,
 div.button:hover span,
 div.button.hover span {
-  background-position: right -673px; 
+  background-position: right -673px;
 }
 
 div.button.active,
@@ -465,16 +465,16 @@ div.uploader.disabled span.filename {
 }
 /*
 
-CORE FUNCTIONALITY 
+CORE FUNCTIONALITY
 
 Not advised to edit stuff below this line
 -----------------------------------------------------
 */
 
-.selector, 
-.checker, 
-.button, 
-.radio, 
+.selector,
+.checker,
+.button,
+.radio,
 .uploader {
   display: -moz-inline-box;
   display: inline-block;
