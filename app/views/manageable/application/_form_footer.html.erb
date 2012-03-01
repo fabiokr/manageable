@@ -1,0 +1,6 @@
+<% unless readonly %>
+  <%= form.inputs do %>
+    <%= submit_button "tick", t("admin.save") %>
+    <%= link_button   "cross", t("admin.cancel"), :back %>
+  <% end %>
+<% end %>

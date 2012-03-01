@@ -1,0 +1,36 @@
+<%= content_box do |box| %>
+  <%= box.navigation do |n| %>
+    <% n.item t('admin.index'), collection_path, :active => true %>
+    <% n.item t('admin.new'),   new_resource_path %>
+  <% end %>
+
+  <h3 class="title"><%= resource_class.model_name.human.pluralize %> (<%= collection.total_count %>)</h3>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><%= sortable :id, resource_class.human_attribute_name(:id) %></th>
+        <%= render "index_headers" %>
+        <th><%= sortable :created_at, resource_class.human_attribute_name(:created_at) %></th>
+        <th><%= sortable :updated_at, resource_class.human_attribute_name(:updated_at) %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% collection.each_with_index do |resource, index| %>
+        <tr class="<%= index % 2 == 0 ? 'odd' : 'even' %>">
+          <td><%= resource.id %></td>
+          <%= render "index_rows", :resource => resource %>
+          <td><%= l(resource.created_at, :format => :short) %></td>
+          <td><%= l(resource.updated_at, :format => :short) %></td>
+          <td><%= render "index_actions", :resource => resource %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= paginate collection %>
+
+  <div class="wat-cf"></div>
+
+<% end %>
