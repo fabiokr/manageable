@@ -13,19 +13,19 @@ module Manageable
 
       # Sets the controls to display in this box. See Activo::Rails::Helper#controls.
       def controls(options = {}, &block)
-        buffers[:block_header] << @parent.controls(options, &block)
+        buffers[:block_header] << @parent.manageable_controls(options, &block)
         ''
       end
 
       # Sets the navigation to display on this box. See Activo::Rails::Helper#navigation.
       def navigation(options = {}, &block)
-        buffers[:block_header] << @parent.secondary_navigation(options, &block)
+        buffers[:block_header] << @parent.manageable_secondary_navigation(options, &block)
         ''
       end
 
       # Sets the breadcrumbs to display in this box. See Activo::Rails::Helper#breadcrumbs.
       def breadcrumbs(options = {}, &block)
-        buffers[:block_footer] << @parent.breadcrumbs(options, &block)
+        buffers[:block_footer] << @parent.manageable_breadcrumbs(options, &block)
         ''
       end
     end

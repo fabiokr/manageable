@@ -1,5 +1,5 @@
 <%= link_to t("manageable.show"), resource_path(resource) %>
 &nbsp;
-<%=  link_to t('admin.edit'),   edit_resource_path(resource) %>
+<%=  link_to t('manageable.edit'),   edit_resource_path(resource) %>
 &nbsp;
-<%=  link_to t('admin.delete'), resource_path(resource), :method => :delete, :confirm => t('admin.delete_resource_confirmation', :resource_name => resource_class.model_name.human) %>
+<%=  link_to t('manageable.delete'), resource_path(resource), :method => :delete, :confirm => t('manageable.delete_confirmation') %>

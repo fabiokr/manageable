@@ -11,6 +11,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110814003912) do
+ActiveRecord::Schema.define(:version => 20120302131617) do
+
+  create_table "samples", :force => true do |t|
+    t.string   "text_field"
+    t.string   "password_field"
+    t.string   "telephone_field"
+    t.string   "date_field"
+    t.string   "url_field"
+    t.string   "email_field"
+    t.string   "number_field"
+    t.string   "range_field"
+    t.string   "file_field"
+    t.string   "radio_button"
+    t.text     "text_area"
+    t.boolean  "checkbox_one"
+    t.boolean  "checkbox_two"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
 
 end

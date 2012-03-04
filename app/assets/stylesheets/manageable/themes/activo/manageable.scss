@@ -1,0 +1,18 @@
+.field_with_errors, .fieldWithErrors {
+  display: inline;
+}
+
+.table {
+  thead tr {
+    a {
+      padding-right: 20px;
+      background: url(/assets/manageable/icons/sort_undefined.png) no-repeat center right;
+      &.sort_asc {
+        background: url(/assets/manageable/icons/sort_asc.png) no-repeat center right;
+      }
+      &.sort_desc {
+        background: url(/assets/manageable/icons/sort_desc.png) no-repeat center right;
+      }
+    }
+  }
+}

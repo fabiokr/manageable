@@ -74,9 +74,9 @@ module Manageable
     # options - A hash to be passed to the image_tag helper (optional)
     #
     # Example:
-    #   icon("add")
+    #   manageable_icon("add")
     #   # => image_tag("/assets/manageable/icons/16x16/add.png", :alt => "Add")
-    #   icon("new_item", :large)
+    #   manageable_icon("new_item", :large)
     #   # => image_tag("/assets/manageable/icons/32x32/new_item.png, :alt => "New Item")
     #
     # Returns an image tag, ready to be displayed in a template.
@@ -161,8 +161,7 @@ module Manageable
 
       content_tag("div", options) do
         items.collect { |item|
-          item[:label] = (icon(item[:icon]) + item[:label]).html_safe if item[:icon]
-          link_to(item[:label], item[:href], item[:link_options].merge(:class => "button"))
+          manageable_button(item[:label], item[:href], item[:link_options].merge(:icon => item[:icon]))
         }.join("").html_safe
       end
     end
@@ -207,6 +206,101 @@ module Manageable
         end
       end
     end
+
+    # Links to a sortable column.
+    # *column*: - The column to link to
+    # *title*:  - The link title
+    # *options*: - Additional link_to options
+    def manageable_sortable(column, title = nil, options = {})
+      title   ||= column.titleize
+      css_class = column && sort_column && column.to_sym == sort_column.to_sym ? "sort_#{sort_direction}" : nil
+      direction = column && sort_column && column.to_sym == sort_column.to_sym && sort_direction == "asc" ? "desc" : "asc"
+      options[:class] = [options[:class], css_class].compact.join(" ")
+
+      link_to title, params.merge(:sort => column, :direction => direction, :page => nil), options
+    end
+
+    # Creates a link_to button
+    def manageable_button(body, url, html_options = {})
+      html_options[:class] = [html_options[:class], "button"].compact.join(" ")
+      icon = manageable_icon(html_options.delete(:icon), :small, :alt => body) if html_options[:icon]
+
+      link_to url, html_options do
+        [icon, body].compact.join("&nbsp;").html_safe
+      end
+    end
+
+    # Prints a pagination block. Accepts the following options:
+    #
+    # *current_page*
+    # *num_pages*
+    # *param_name*
+    def manageable_pagination(options = {})
+      current_page = options[:current_page] || 1
+      num_pages    = options[:num_pages] || 1
+      outer_window = options[:outer_window] || 4
+      page_param   = options[:param_name] || :page
+
+      if current_page <= num_pages
+        previous_page = current_page - 1
+        next_page     = current_page + 1
+        left_window   = ((current_page - outer_window)...current_page).to_a.select{|i| i > 0}
+        right_window  = ((current_page + 1)..(current_page + outer_window)).to_a.select{|i| i <= num_pages}
+
+        elements = []
+
+        if 1 != current_page
+          # First
+          elements <<  {:value => t("manageable.pagination.first"), :href => params.merge(page_param => 1)}
+
+          # Previous
+          elements <<  {:value => t("manageable.pagination.previous"), :href => params.merge(page_param => previous_page)}
+        end
+
+        # Left Gap
+        if left_window.first != 1
+          elements <<  {:value => t("manageable.pagination.gap")}
+        end
+
+        # Left window
+        left_window.each do |i|
+          elements <<  {:value => i, :href => params.merge(page_param => i)}
+        end
+
+        # Current Page
+        elements <<  {:value => current_page, :html => {:class => "current"}}
+
+        # Right window
+        right_window.each do |i|
+          elements <<  {:value => i, :href => params.merge(page_param => i)}
+        end
+
+        # Right Gap
+        if right_window.last != num_pages
+          elements <<  {:value => t("manageable.pagination.gap")}
+        end
+
+        if num_pages != current_page
+          # Next
+          elements <<  {:value => t("manageable.pagination.next"), :href => params.merge(page_param => next_page)}
+
+          # Last
+          elements <<  {:value => t("manageable.pagination.last"), :href => params.merge(page_param => num_pages)}
+        end
+
+        content_tag :div, :class => "pagination" do
+          elements.map do |options|
+            if options[:href]
+              link_to options[:value], options[:href]
+            else
+              content_tag(:span, options[:value], options[:html])
+            end
+          end.join.html_safe
+        end
+      end
+    end
+
+    # Default customizable helpers
 
     def manageable_head
       content_for(:head)

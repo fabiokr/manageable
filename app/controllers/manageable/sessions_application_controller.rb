@@ -1,5 +1,5 @@
 module Manageable
-  class SessionsController < ActionController::Base
+  class SessionsApplicationController < ActionController::Base
     protect_from_forgery
     layout 'manageable/session'
   end

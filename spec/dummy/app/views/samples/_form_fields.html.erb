@@ -1,0 +1,22 @@
+<%= form.text_field :text_field, :description => "This is a text field" %>
+<%= form.password_field :password_field, :description => "This is a password field" %>
+<%= form.telephone_field :telephone_field, :description => "This is a telephone field" %>
+<%#= form.date_field :date_field, :description => "This is a date field" %>
+<%= form.url_field :url_field, :description => "This is an url field" %>
+<%= form.email_field :email_field, :description => "This is an email field" %>
+<%= form.number_field :number_field, :description => "This is a number field" %>
+<%= form.range_field :range_field, :description => "This is a range field" %>
+<%= form.file_field :file_field, :description => "This is a file field" %>
+<%= form.text_area :text_area, :description => "This is a text area" %>
+
+<div class="group">
+  <%= form.label "Checkboxes", :class => "label" %>
+  <%= form.check_box :checkbox_one %>
+  <%= form.check_box :checkbox_two %>
+</div>
+
+<div class="group">
+  <%= form.label "Radio", :class => "label" %>
+  <%= form.radio_button :radio_button, "Value 1" %>
+  <%= form.radio_button :radio_button, "Value 2" %>
+</div>

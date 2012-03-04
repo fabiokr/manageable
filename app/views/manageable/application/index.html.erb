@@ -1,18 +1,18 @@
-<%= content_box do |box| %>
+<%= manageable_content_box do |box| %>
   <%= box.navigation do |n| %>
     <% n.item t('admin.index'), collection_path, :active => true %>
     <% n.item t('admin.new'),   new_resource_path %>
   <% end %>
 
-  <h3 class="title"><%= resource_class.model_name.human.pluralize %> (<%= collection.total_count %>)</h3>
+  <%= render "index_header" %>
 
   <table class="table">
     <thead>
       <tr>
-        <th><%= sortable :id, resource_class.human_attribute_name(:id) %></th>
+        <th><%= manageable_sortable :id, resource_class.human_attribute_name(:id) %></th>
         <%= render "index_headers" %>
-        <th><%= sortable :created_at, resource_class.human_attribute_name(:created_at) %></th>
-        <th><%= sortable :updated_at, resource_class.human_attribute_name(:updated_at) %></th>
+        <th><%= manageable_sortable :created_at, resource_class.human_attribute_name(:created_at) %></th>
+        <th><%= manageable_sortable :updated_at, resource_class.human_attribute_name(:updated_at) %></th>
         <th></th>
       </tr>
     </thead>
@@ -29,7 +29,7 @@
     </tbody>
   </table>
 
-  <%= paginate collection %>
+  <%= render "index_pagination" %>
 
   <div class="wat-cf"></div>
 

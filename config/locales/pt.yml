@@ -1,0 +1,16 @@
+pt:
+  manageable:
+    index: "Listagem"
+    new: "Novo"
+    show: "Exibir"
+    edit: "Editar"
+    delete: "Remover"
+    delete_confirmation: "Tem certeza que deseja remover este item?"
+    save: "Salvar"
+    cancel: "Cancelar"
+    pagination:
+      first: "Primeira"
+      previous: "«"
+      next: "»"
+      last: "Última"
+      gap: "..."

@@ -1,18 +1,19 @@
 <% readonly = false if readonly.nil? %>
-<%= content_box do |box| %>
+<%= manageable_content_box do |box| %>
   <%= box.navigation do |n| %>
-    <% n.item t("admin.index"), collection_path %>
-    <% n.item t("admin.new"),  new_resource_path, :active => current_page?(new_resource_path) %>
+    <% n.item t("manageable.index"), collection_path %>
+    <% n.item t("manageable.new"),  new_resource_path, :active => current_page?(new_resource_path) %>
     <% if resource.persisted? %>
-      <% n.item t("admin.show"), resource_path(resource), :active => current_page?(resource_path(resource)) %>
-      <% n.item t("admin.edit"), edit_resource_path(resource), :active => current_page?(edit_resource_path(resource)) %>
-    <% end %>
-  <%= box.controls do |c| %>
-    <% if resource.persisted? %>
-      <% c.item t("admin.delete"), resource_path(resource), :link_options => { :method => :delete, :confirm => t("admin.delete_resource_confirmation", :resource_name => resource_class.model_name.human) }, :icon => "delete" %>
+      <% n.item t("manageable.show"), resource_path(resource), :active => current_page?(resource_path(resource)) %>
+      <% n.item t("manageable.edit"), edit_resource_path(resource), :active => current_page?(edit_resource_path(resource)) %>
     <% end %>
   <% end %>
-  <%= semantic_form_for resource, :url => resource.persisted? ? resource_path(resource) : collection_path, :method => resource.persisted? ? :put : :post  do |form| %>
+  <%= box.controls do |c| %>
+    <% if resource.persisted? %>
+      <% c.item t("manageable.delete"), resource_path(resource), :link_options => { :method => :delete, :confirm => t("manageable.delete_confirmation", :resource_name => resource_class.model_name.human) }, :icon => "delete" %>
+    <% end %>
+  <% end %>
+  <%= form_for resource, :url => resource.persisted? ? resource_path(resource) : collection_path, :method => resource.persisted? ? :put : :post, :builder => Manageable::Helpers::FormBuilder, :html => {:class => "form uniform"}  do |form| %>
     <h3 class="title"><%= form.object.class.model_name.human.titleize %></h3>
     <%= render "form_fields", :form => form, :readonly => readonly %>
     <%= render "form_footer", :form => form, :readonly => readonly %>
