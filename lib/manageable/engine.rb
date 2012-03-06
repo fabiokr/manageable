@@ -1,4 +1,6 @@
 require "rails"
+require "jquery-rails"
+require "sass-rails"
 
 module Manageable
   class Engine < Rails::Engine
