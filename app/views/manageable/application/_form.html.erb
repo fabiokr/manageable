@@ -1,17 +1,10 @@
 <% readonly = false if readonly.nil? %>
 <%= manageable_content_box do |box| %>
-  <%= box.navigation do |n| %>
-    <% n.item t("manageable.index"), collection_path %>
-    <% n.item t("manageable.new"),  new_resource_path, :active => current_page?(new_resource_path) %>
-    <% if resource.persisted? %>
-      <% n.item t("manageable.show"), resource_path(resource), :active => current_page?(resource_path(resource)) %>
-      <% n.item t("manageable.edit"), edit_resource_path(resource), :active => current_page?(edit_resource_path(resource)) %>
-    <% end %>
+  <%= box.navigation do |nav| %>
+    <%= render "form_navigation", :nav => nav %>
   <% end %>
-  <%= box.controls do |c| %>
-    <% if resource.persisted? %>
-      <% c.item t("manageable.delete"), resource_path(resource), :link_options => { :method => :delete, :confirm => t("manageable.delete_confirmation", :resource_name => resource_class.model_name.human) }, :icon => "delete" %>
-    <% end %>
+  <%= box.controls do |control| %>
+    <%= render "form_controls", :control => control %>
   <% end %>
   <%= form_for resource, :url => resource.persisted? ? resource_path(resource) : collection_path, :method => resource.persisted? ? :put : :post, :builder => Manageable::Helpers::FormBuilder, :html => {:class => "form uniform"}  do |form| %>
     <h3 class="title"><%= form.object.class.model_name.human.titleize %></h3>

@@ -1,0 +1,6 @@
+<% nav.item t("manageable.index"), collection_path %>
+<% nav.item t("manageable.new"),  new_resource_path, :active => current_page?(new_resource_path) %>
+<% if resource.persisted? %>
+  <% nav.item t("manageable.show"), resource_path(resource), :active => current_page?(resource_path(resource)) %>
+  <% nav.item t("manageable.edit"), edit_resource_path(resource), :active => current_page?(edit_resource_path(resource)) %>
+<% end %>

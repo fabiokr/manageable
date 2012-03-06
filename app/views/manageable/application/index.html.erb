@@ -1,7 +1,6 @@
 <%= manageable_content_box do |box| %>
-  <%= box.navigation do |n| %>
-    <% n.item t('admin.index'), collection_path, :active => true %>
-    <% n.item t('admin.new'),   new_resource_path %>
+  <%= box.navigation do |nav| %>
+    <%= render "index_navigation", :nav => nav %>
   <% end %>
 
   <%= render "index_header" %>

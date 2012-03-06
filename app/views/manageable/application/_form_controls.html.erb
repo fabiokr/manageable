@@ -1,0 +1,3 @@
+<% if resource.persisted? %>
+  <% control.item t("manageable.delete"), resource_path(resource), :link_options => { :method => :delete, :confirm => t("manageable.delete_confirmation", :resource_name => resource_class.model_name.human) }, :icon => "delete" %>
+<% end %>
