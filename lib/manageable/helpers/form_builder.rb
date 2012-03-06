@@ -74,7 +74,7 @@ module Manageable
 
       def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
         options[:class] = [options[:class], "checkbox"].compact.join(" ")
-        label_tag = label(method, :class => "checkbox")
+        label_tag = label(method, options.delete(:label), :class => "checkbox")
         label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
         @template.content_tag(:div) do
@@ -84,7 +84,7 @@ module Manageable
 
       def radio_button(method, tag_value, options = {})
         options[:class] = [options[:class], "radio"].compact.join(" ")
-        label_tag = label(method, :class => "radio")
+        label_tag = label(method, options.delete(:label), :class => "radio")
         label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
         @template.content_tag(:div) do
@@ -93,7 +93,7 @@ module Manageable
       end
 
       def labeled_field(method, field_tag, options = {})
-        label_tag = label(method, :class => "label")
+        label_tag = label(method, options.delete(:label), :class => "label")
         description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
 
         # Applies fieldWithErrors
