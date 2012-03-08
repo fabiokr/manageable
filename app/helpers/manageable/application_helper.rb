@@ -300,6 +300,23 @@ module Manageable
       end
     end
 
+    # Helper for custom attrtastic like builder
+    def manageable_attributes(record, options = {}, &block)
+      options[:html] ||= {}
+
+      html_class = [ "attrtastic", record.class.to_s.underscore, options[:html][:class] ].compact.join(" ")
+
+      output = tag(:div, { :class => html_class}, true)
+      if block_given?
+        output << capture(Helpers::AttributesBuilder.new(record, self), &block)
+      else
+        output << capture(Helpers::AttributesBuilder.new(record, self)) do |attr|
+          attr.attributes
+        end
+      end
+      output.safe_concat("</div>")
+    end
+
     # Default customizable helpers
 
     def manageable_head

@@ -1,10 +1,12 @@
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rspec/rails'
+require 'capybara-webkit'
 
 ENGINE_RAILS_ROOT=File.join(File.dirname(__FILE__), '../')
 
 Dir[File.join(ENGINE_RAILS_ROOT, "spec/support/**/*.rb")].each {|f| require f }
+Capybara.javascript_driver = :webkit
 
 RSpec.configure do |config|
   config.mock_with :rspec

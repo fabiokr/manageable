@@ -1,4 +1,3 @@
-<% readonly = false if readonly.nil? %>
 <%= manageable_content_box do |box| %>
   <%= box.navigation do |nav| %>
     <%= render "form_navigation", :nav => nav %>
@@ -7,8 +6,8 @@
     <%= render "form_controls", :control => control %>
   <% end %>
   <%= form_for resource, :url => resource.persisted? ? resource_path(resource) : collection_path, :method => resource.persisted? ? :put : :post, :builder => Manageable::Helpers::FormBuilder, :html => {:class => "form uniform"}  do |form| %>
-    <h3 class="title"><%= form.object.class.model_name.human.titleize %></h3>
-    <%= render "form_fields", :form => form, :readonly => readonly %>
-    <%= render "form_footer", :form => form, :readonly => readonly %>
+    <h3 class="title"><%= resource_class.model_name.human.titleize %></h3>
+    <%= render "form_fields", :form => form %>
+    <%= render "form_footer", :form => form %>
   <% end %>
 <% end %>
