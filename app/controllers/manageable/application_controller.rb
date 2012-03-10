@@ -37,7 +37,7 @@ module Manageable
 
       def resource_paths(paths = nil)
         @resource_paths = paths if paths
-        @resource_paths
+        @resource_paths ||= {}
       end
     end
 
@@ -84,8 +84,8 @@ module Manageable
     private
 
     def find_resource_path(path, *args)
-      if path = self.class.resource_paths[path]
-        send "#{path}_path", *args
+      if self.class.resource_paths[path]
+        send "#{self.class.resource_paths[path]}_path", *args
       else
         raise NotImplementedError, "You have to define the #{path}_path method in your controller or configure it with manageable_configuration"
       end
