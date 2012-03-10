@@ -1,19 +1,38 @@
 module Manageable
   class ApplicationController < ActionController::Base
     class << self
-      # paths
-      #  :collection => :examples
-      #  :resource => :example
-      #  :new_resource => :new_example
-      #  :edit_resource => :edit_example
-      def manageable_configuration(klass, paths = {})
+      #  :vars => {
+      #    :collection => :examples,
+      #    :resource => :example
+      #  },
+      #  :paths => {
+      #    :collection => :examples,
+      #    :resource => :example,
+      #    :new => :new_example,
+      #    :edit => :edit_example,
+      # }
+      def manageable_configuration(klass, options = {})
         resource_class klass
-        resource_paths paths
+        resource_vars  options[:vars]
+        resource_paths options[:paths]
       end
 
+      # The resource class
       def resource_class(klass = nil)
         @resource_class = klass if klass
         @resource_class
+      end
+
+      # The controller var names for the resource
+      # E.g.: :collection => :pages, :resource => :page
+      def resource_vars(vars = nil)
+        @resource_vars = vars if vars
+        @resource_vars ||= begin
+          {
+            :resource   => resource_class.model_name.element,
+            :collection => resource_class.model_name.element.pluralize
+          }
+        end
       end
 
       def resource_paths(paths = nil)
@@ -28,19 +47,17 @@ module Manageable
                   :collection_path, :resource_path, :new_resource_path, :edit_resource_path
 
     # Custom respond_with wich stores resources for later use
-    def respond_with(*resources, &block)
+    def respond_with_with_storage(*resources, &block)
       @responded_with = resources
-      super(*resources, &block)
+      respond_with_without_storage(*resources, &block)
     end
+    alias_method :respond_with_without_storage, :respond_with
+    alias_method :respond_with, :respond_with_with_storage
 
     protected
 
     def resource_class
-      if klass = self.class.resource_class
-        klass
-      else
-        raise NotImplementedError, "You have to define the resource_class method in your controller"
-      end
+      self.class.resource_class
     end
 
     def resource
