@@ -2,3 +2,4 @@ TODO
 
 * Write README
 * Write examples
+* write about the pagination file
