@@ -27,49 +27,24 @@ module Manageable
         end
       end
 
-      def text_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
+      [:text_field, :password_field, :telephone_field, :url_field, :email_field, :number_field, :range_field,
+        :file_field, :text_area].each do |selector|
+        class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
+          def #{selector}_with_label(method, options = {})
+            description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
+            label_tag       = label(method, options.delete(:label), :class => "label")
+            field_tag       = #{selector}_without_label(method, options)
 
-      def password_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
+            # Applies fieldWithErrors
+            label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
-      def telephone_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
-
-      def url_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
-
-      def email_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
-
-      def number_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
-
-      def range_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
-
-      def file_field(method, options={})
-        options[:class] = [options[:class], "text_field"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
-      end
-
-      def text_area(method, options={})
-        options[:class] = [options[:class], "text_area"].compact.join(" ")
-        labeled_field(method, super(method, options), options)
+            @template.content_tag(:div, :class => "group") do
+              (label_tag + field_tag + description_tag).html_safe
+            end
+          end
+          alias_method :#{selector}_without_label, :#{selector}
+          alias_method :#{selector}, :#{selector}_with_label
+        RUBY_EVAL
       end
 
       def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")
@@ -89,18 +64,6 @@ module Manageable
 
         @template.content_tag(:div) do
           (super(method, tag_value, options) + label_tag).html_safe
-        end
-      end
-
-      def labeled_field(method, field_tag, options = {})
-        label_tag = label(method, options.delete(:label), :class => "label")
-        description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
-
-        # Applies fieldWithErrors
-        label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
-
-        @template.content_tag :div, :class => "group" do
-          (label_tag + field_tag + description_tag).html_safe
         end
       end
     end
