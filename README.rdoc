@@ -3,3 +3,7 @@ TODO
 * Write README
 * Write examples
 * write about the pagination file
+* write about lib/manageable/models/acts_as_article
+* write about lib/manageable/spec/models/articles | requires factory girl and rspec and shoulda-matchers
+* write about the db migration that generates a base article to be used with lib/manageable/models/acts_as_article
+  rake manageable_engine:install:migrations

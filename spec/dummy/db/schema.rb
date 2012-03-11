@@ -24,11 +24,13 @@ ActiveRecord::Schema.define(:version => 20120302131617) do
     t.string   "range_field"
     t.string   "file_field"
     t.string   "radio_button"
+    t.string   "select_field"
+    t.string   "multiple_select_field"
     t.text     "text_area"
     t.boolean  "checkbox_one"
     t.boolean  "checkbox_two"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
   end
 
 end

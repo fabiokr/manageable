@@ -8,6 +8,7 @@ module Manageable
   end
 end
 
+require "manageable/models/acts_as_article"
 require "manageable/controllers/pageable"
 require "manageable/helpers/box_builder"
 require "manageable/helpers/navigation_builder"

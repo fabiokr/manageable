@@ -3,10 +3,12 @@ class SamplesController < ApplicationController
 
   respond_to :html
 
-  manageable_configuration Sample, :collection    => :samples,
-                                   :resource      => :sample,
-                                   :new_resource  => :new_sample,
-                                   :edit_resource => :edit_sample
+  manageable_configuration Sample, :paths => {
+                                     :collection    => :samples,
+                                     :resource      => :sample,
+                                     :new_resource  => :new_sample,
+                                     :edit_resource => :edit_sample
+                                   }
 
   def index
     respond_with @samples = scoped

@@ -27,10 +27,24 @@ module Manageable
         end
       end
 
+      HTML_CLASSES = {
+        :text_field => "text_field",
+        :password_field => "text_field",
+        :telephone_field => "text_field",
+        :url_field => "text_field",
+        :email_field => "text_field",
+        :number_field => "text_field",
+        :range_field => "text_field",
+        :file_field => "text_field",
+        :text_area => "text_area"
+      }
+
       [:text_field, :password_field, :telephone_field, :url_field, :email_field, :number_field, :range_field,
         :file_field, :text_area].each do |selector|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
           def #{selector}_with_label(method, options = {})
+            options[:class] = [options[:class], "#{HTML_CLASSES[selector]}"].compact.join(" ")
+
             description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
             label_tag       = label(method, options.delete(:label), :class => "label")
             field_tag       = #{selector}_without_label(method, options)
@@ -45,6 +59,19 @@ module Manageable
           alias_method :#{selector}_without_label, :#{selector}
           alias_method :#{selector}, :#{selector}_with_label
         RUBY_EVAL
+      end
+
+      def select(method, choices, options = {}, html_options = {})
+        description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
+        label_tag       = label(method, options.delete(:label), :class => "label")
+        field_tag       = super(method, choices, options, html_options)
+
+        # Applies fieldWithErrors
+        label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
+
+        @template.content_tag(:div, :class => "group") do
+          (label_tag + field_tag + description_tag).html_safe
+        end
       end
 
       def check_box(method, options = {}, checked_value = "1", unchecked_value = "0")

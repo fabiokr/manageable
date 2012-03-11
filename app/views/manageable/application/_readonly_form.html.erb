@@ -7,7 +7,12 @@
   <% end %>
   <%= manageable_attributes(resource) do |attr| %>
     <h3 class="title"><%= resource_class.model_name.human.titleize %></h3>
-    <%= render "readonly_form_fields", :attr => attr %>
+    <%= attr.attributes do %>
+      <%= attr.attribute :id %>
+      <%= render "readonly_form_fields", :attr => attr %>
+      <%= attr.left_attribute :created_at %>
+      <%= attr.right_attribute :created_at %>
+    <% end %>
     <div class="clear"></div>
   <% end %>
 <% end %>
