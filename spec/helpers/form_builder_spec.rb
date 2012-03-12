@@ -20,39 +20,39 @@ describe ActionView::Helpers::FormHelper do
   end
 
   it "should print labeled text_field" do
-    @text_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" size="30" type="text" /></div>'
+    @text_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" size="30" type="text" /></div>'
   end
 
   it "should print labeled password_field" do
-    @password_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" size="30" type="password" /></div>'
+    @password_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" size="30" type="password" /></div>'
   end
 
   it "should print labeled telephone_field" do
-    @telephone_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" size="30" type="tel" /></div>'
+    @telephone_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" size="30" type="tel" /></div>'
   end
 
   it "should print labeled url_field" do
-    @url_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" size="30" type="url" /></div>'
+    @url_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" size="30" type="url" /></div>'
   end
 
   it "should print labeled email_field" do
-    @email_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" size="30" type="email" /></div>'
+    @email_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" size="30" type="email" /></div>'
   end
 
   it "should print labeled number_field" do
-    @number_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" type="number" /></div>'
+    @number_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" type="number" /></div>'
   end
 
   it "should print labeled range_field" do
-    @range_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" type="range" /></div>'
+    @range_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" type="range" /></div>'
   end
 
   it "should print labeled file_field" do
-    @file_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input id="fake_model_name" name="fake_model[name]" type="file" /></div>'
+    @file_field.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><input class="text_field" id="fake_model_name" name="fake_model[name]" type="file" /></div>'
   end
 
   it "should print labeled text_area" do
-    @text_area.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><textarea cols="40" id="fake_model_name" name="fake_model[name]" rows="20"></textarea></div>'
+    @text_area.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><textarea class="text_area" cols="40" id="fake_model_name" name="fake_model[name]" rows="20"></textarea></div>'
   end
 
   it "should print labeled check_box" do
