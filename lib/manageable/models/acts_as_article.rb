@@ -14,16 +14,20 @@ module Manageable
         scope :highlighted, lambda { where(:highlight => true) }
         scope :for_slug,    lambda { |param| where(:slug => param) }
         scope :for_locale,  lambda { |locale| where(:locale => locale) }
-        scope :for_published_at, (lambda do |year, month = nil, day = nil|
-          beginning_date, end_date = if month.nil? && day.nil?
-            [Date.new(year).beginning_of_year, Date.new(year).end_of_year]
-          elsif day.nil?
-            [Date.new(year, month).beginning_of_month, Date.new(year, month).end_of_month]
+        scope :for_published_at, (lambda do |year = nil, month = nil, day = nil|
+          if year.nil?
+            scoped
           else
-            [Date.new(year, month, day).beginning_of_day, Date.new(year, month, day).end_of_day]
-          end
+            beginning_date, end_date = if month.nil? && day.nil?
+              [Date.new(year.to_i).beginning_of_year, Date.new(year.to_i).end_of_year]
+            elsif day.nil?
+              [Date.new(year.to_i, month.to_i).beginning_of_month, Date.new(year.to_i, month.to_i).end_of_month]
+            else
+              [Date.new(year.to_i, month.to_i, day.to_i).beginning_of_day, Date.new(year.to_i, month.to_i, day.to_i).end_of_day]
+            end
 
-          where("published_at >= ? AND published_at <= ?", beginning_date, end_date)
+            where("published_at >= ? AND published_at <= ?", beginning_date, end_date)
+          end
         end)
         scope :sorted,      (lambda do |*args|
           sort = args.first

@@ -83,6 +83,14 @@ shared_examples_for 'acts_as_article' do |options = {}|
 
         described_class.for_published_at(Date.current.year, Date.current.month, Date.current.day).should == [article_current_day]
       end
+
+      it "should not filter for empty params" do
+        article_last_day    = Factory(options[:factory], :published_at => Date.current - 1.day)
+        article_current_day = Factory(options[:factory], :published_at => Date.current)
+        article_next_day    = Factory(options[:factory], :published_at => Date.current + 1.day)
+
+        described_class.for_published_at.should == [article_last_day, article_current_day, article_next_day]
+      end
     end
   end
 
