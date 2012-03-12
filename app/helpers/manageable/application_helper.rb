@@ -323,6 +323,10 @@ module Manageable
       content_for(:head)
     end
 
+    def manageable_javascripts
+      content_for(:javascripts)
+    end
+
     def manageable_sidebar
       content_for(:sidebar)
     end
