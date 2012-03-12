@@ -11,7 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120302131617) do
+ActiveRecord::Schema.define(:version => 20120312112227) do
+
+  create_table "articles", :force => true do |t|
+    t.string   "slug"
+    t.string   "title"
+    t.string   "description"
+    t.string   "keywords"
+    t.string   "locale"
+    t.text     "excerpt"
+    t.text     "content"
+    t.datetime "published_at"
+    t.boolean  "highlight"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "articles", ["highlight", "published_at", "locale"], :name => "index_articles_on_highlight_and_published_at_and_locale"
+  add_index "articles", ["published_at", "locale"], :name => "index_articles_on_published_at_and_locale"
+  add_index "articles", ["slug"], :name => "index_articles_on_slug"
 
   create_table "samples", :force => true do |t|
     t.string   "text_field"

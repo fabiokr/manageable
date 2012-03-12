@@ -21,31 +21,35 @@ shared_examples_for 'acts_as_article' do |options = {}|
 
   context "scopes" do
     it 'should have unpublished scope' do
-      articles = [Factory(options[:factory], :published_at => nil), Factory(options[:factory], :published_at => DateTime.now)]
+      unpublished_article = Factory(options[:factory], :published_at => nil)
+      published_article   = Factory(options[:factory], :published_at => DateTime.now)
 
-      [articles[0]].should == described_class.unpublished.all
+      described_class.unpublished.should == [unpublished_article]
     end
 
     it 'should have published scope' do
-      articles = [Factory(options[:factory], :published_at => nil), Factory(options[:factory], :published_at => DateTime.now)]
+      unpublished_article = Factory(options[:factory], :published_at => nil)
+      published_article   = Factory(options[:factory], :published_at => DateTime.now)
 
-      [articles[1]].should == described_class.published.all
+      described_class.published.should == [published_article]
     end
 
     it 'should have sorted scope' do
-      described_class.sorted.all.should_not be_nil
+      described_class.sorted.should_not be_nil
     end
 
     it 'should have highlighted scope' do
-      articles = [Factory(options[:factory], :highlight => false), Factory(options[:factory], :highlight => true)]
+      not_highlighted_article = Factory(options[:factory], :highlight => false)
+      highlighted_article     = Factory(options[:factory], :highlight => true)
 
-      [articles[1]].should == described_class.highlighted.all
+      described_class.highlighted.should == [highlighted_article]
     end
 
-    it 'should have for_url_param scope' do
-      article = Factory(options[:factory], :published_at => DateTime.now)
+    it 'should have for_slug scope' do
+      article         = Factory(options[:factory], :published_at => DateTime.now)
+      slugged_article = Factory(options[:factory], :title => "Our custom title")
 
-      article.should == described_class.for_url_param(article.slug).first
+      described_class.for_slug(slugged_article.slug).should == [slugged_article]
     end
 
     it 'should have for_locale scope' do
@@ -53,6 +57,32 @@ shared_examples_for 'acts_as_article' do |options = {}|
       other_locale_article = Factory(options[:factory], :locale => "pt")
 
       described_class.for_locale("en").should == [locale_article]
+    end
+
+    describe 'for_published_at scope' do
+      it 'should filter by year' do
+        article_last_year    = Factory(options[:factory], :published_at => Date.current - 1.year)
+        article_current_year = Factory(options[:factory], :published_at => Date.current)
+        article_next_year    = Factory(options[:factory], :published_at => Date.current + 1.year)
+
+        described_class.for_published_at(Date.current.year).should == [article_current_year]
+      end
+
+      it 'should filter by year and month' do
+        article_last_month    = Factory(options[:factory], :published_at => Date.current - 1.month)
+        article_current_month = Factory(options[:factory], :published_at => Date.current)
+        article_next_month    = Factory(options[:factory], :published_at => Date.current + 1.month)
+
+        described_class.for_published_at(Date.current.year, Date.current.month).should == [article_current_month]
+      end
+
+      it 'should filter by year and month and day' do
+        article_last_day    = Factory(options[:factory], :published_at => Date.current - 1.day)
+        article_current_day = Factory(options[:factory], :published_at => Date.current)
+        article_next_day    = Factory(options[:factory], :published_at => Date.current + 1.day)
+
+        described_class.for_published_at(Date.current.year, Date.current.month, Date.current.day).should == [article_current_day]
+      end
     end
   end
 
