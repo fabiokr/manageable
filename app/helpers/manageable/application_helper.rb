@@ -258,7 +258,7 @@ module Manageable
         end
 
         # Left Gap
-        if left_window.first != 1
+        if left_window.first && left_window.first != 1
           elements <<  {:value => t("manageable.pagination.gap")}
         end
 
@@ -276,7 +276,7 @@ module Manageable
         end
 
         # Right Gap
-        if right_window.last != num_pages
+        if right_window.last && right_window.last != num_pages
           elements <<  {:value => t("manageable.pagination.gap")}
         end
 
