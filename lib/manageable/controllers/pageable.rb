@@ -33,7 +33,7 @@ module Manageable
         elsif sort_column
           sort_column
         else
-          nil
+          "created_at DESC"
         end
       end
 
