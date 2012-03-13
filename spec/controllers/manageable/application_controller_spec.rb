@@ -60,7 +60,7 @@ describe Manageable::ApplicationController do
 
       before do
         controller.should_receive(:respond_with_without_storage).and_return(nil)
-        controller.respond_with(FakeModel.new, FakeModel.new, expected)
+        controller.respond_with([FakeModel.new, FakeModel.new, expected])
       end
 
       it "should retrieve the last resource with #resource" do

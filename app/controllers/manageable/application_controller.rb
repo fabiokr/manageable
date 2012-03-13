@@ -47,9 +47,9 @@ module Manageable
                   :collection_path, :resource_path, :new_resource_path, :edit_resource_path
 
     # Custom respond_with wich stores resources for later use
-    def respond_with_with_storage(*resources, &block)
-      @responded_with = resources
-      respond_with_without_storage(*resources, &block)
+    def respond_with_with_storage(*args, &block)
+      @responded_with = Array(args.first)
+      respond_with_without_storage(*args, &block)
     end
     alias_method :respond_with_without_storage, :respond_with
     alias_method :respond_with, :respond_with_with_storage
