@@ -4,10 +4,9 @@ module Manageable
       extend ActiveSupport::Concern
 
       included do
-        before_save :set_slug, :set_published
+        before_save :set_slug, :set_published, :set_locale
 
         validates :title, :presence => true, :uniqueness => {:scope => :category_id, :case_sensitive => false, :if => Proc.new { |article| article.respond_to?(:category_id) }}
-        validates :locale, :presence => true
 
         scope :unpublished, where(:published_at => nil)
         scope :published,   lambda { where(arel_table[:published_at].not_eq(nil)) }
@@ -51,6 +50,10 @@ module Manageable
 
       def set_published
         self.published_at = DateTime.now if @publish_now
+      end
+
+      def set_locale
+        self.locale = I18n.locale unless self.locale
       end
     end
   end

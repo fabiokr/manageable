@@ -17,7 +17,6 @@ shared_examples_for 'acts_as_article' do |options = {}|
   it { should have_db_index([:highlight, :published_at, :locale]) }
 
   it { should validate_presence_of(:title) }
-  it { should validate_presence_of(:locale) }
 
   context "scopes" do
     it 'should have unpublished scope' do
@@ -109,6 +108,16 @@ shared_examples_for 'acts_as_article' do |options = {}|
     it 'should save slug from title' do
       article = Factory(options[:factory])
       article.slug.should == "#{article.title.parameterize}"
+    end
+
+    it 'should save locale if not set' do
+      article = Factory(options[:factory], :locale => nil)
+      article.locale.should == I18n.locale
+    end
+
+    it 'should keep locale if set' do
+      article = Factory(options[:factory], :locale => "jp")
+      article.locale.should == "jp"
     end
   end
 end
