@@ -48,7 +48,7 @@ module Manageable
 
     # Custom respond_with wich stores resources for later use
     def respond_with_with_storage(*args, &block)
-      @responded_with = Array(args.first)
+      @responded_with = args.last.is_a?(Hash) ? args - [args.last] : args
       respond_with_without_storage(*args, &block)
     end
     alias_method :respond_with_without_storage, :respond_with
