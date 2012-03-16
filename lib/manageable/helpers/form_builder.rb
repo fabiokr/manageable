@@ -43,17 +43,21 @@ module Manageable
         :file_field, :text_area].each do |selector|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
           def #{selector}_with_label(method, options = {})
-            options[:class] = [options[:class], "#{HTML_CLASSES[selector]}"].compact.join(" ")
+            unless options[:label]
+              options[:class] = [options[:class], "#{HTML_CLASSES[selector]}"].compact.join(" ")
 
-            description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
-            label_tag       = label(method, options.delete(:label), :class => "label")
-            field_tag       = #{selector}_without_label(method, options)
+              description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
+              label_tag       = label(method, options.delete(:label), :class => "label")
+              field_tag       = #{selector}_without_label(method, options)
 
-            # Applies fieldWithErrors
-            label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
+              # Applies fieldWithErrors
+              label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
-            @template.content_tag(:div, :class => "group") do
-              (label_tag + field_tag + description_tag).html_safe
+              group do
+                (label_tag + field_tag + description_tag).html_safe
+              end
+            else
+              #{selector}_without_label(method, options)
             end
           end
           alias_method :#{selector}_without_label, :#{selector}
@@ -62,15 +66,19 @@ module Manageable
       end
 
       def select(method, choices, options = {}, html_options = {})
-        description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
-        label_tag       = label(method, options.delete(:label), :class => "label")
-        field_tag       = super(method, choices, options, html_options)
+        unless options[:label]
+          description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
+          label_tag       = label(method, options.delete(:label), :class => "label")
+          field_tag       = super(method, choices, options, html_options)
 
-        # Applies fieldWithErrors
-        label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
+          # Applies fieldWithErrors
+          label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
-        @template.content_tag(:div, :class => "group") do
-          (label_tag + field_tag + description_tag).html_safe
+          group do
+            (label_tag + field_tag + description_tag).html_safe
+          end
+        else
+          super(method, choices, options, html_options)
         end
       end
 
@@ -86,11 +94,17 @@ module Manageable
 
       def radio_button(method, tag_value, options = {})
         options[:class] = [options[:class], "radio"].compact.join(" ")
-        label_tag = label(method, options.delete(:label), :class => "radio")
+        label_tag = label(method, options.delete(:label) || tag_value, :class => "radio", :value => tag_value)
         label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
         @template.content_tag(:div) do
           (super(method, tag_value, options) + label_tag).html_safe
+        end
+      end
+
+      def group
+        @template.content_tag(:div, :class => "group") do
+          yield
         end
       end
     end

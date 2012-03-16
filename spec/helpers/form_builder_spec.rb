@@ -15,6 +15,7 @@ describe ActionView::Helpers::FormHelper do
       @text_area = f.text_area(:name)
       @check_box = f.check_box(:name)
       @radio_button = f.radio_button(:name, "Yes")
+      @group = f.group { "thegroup" }
       @button = f.button("Save")
     end
   end
@@ -60,7 +61,11 @@ describe ActionView::Helpers::FormHelper do
   end
 
   it "should print labeled radio_button" do
-    @radio_button.should == '<div><input class="radio" id="fake_model_name_yes" name="fake_model[name]" type="radio" value="Yes" /><div class="fieldWithErrors"><label class="radio" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div></div>'
+    @radio_button.should == '<div><input class="radio" id="fake_model_name_yes" name="fake_model[name]" type="radio" value="Yes" /><div class="fieldWithErrors"><label class="radio" for="fake_model_name_yes">Yes</label>&nbsp<span class="error">is required</span></div></div>'
+  end
+
+  it "should print group" do
+    @group.should == '<div class="group">thegroup</div>'
   end
 
   it "should print button" do
