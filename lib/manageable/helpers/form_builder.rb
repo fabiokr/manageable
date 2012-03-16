@@ -46,14 +46,16 @@ module Manageable
             unless options[:label]
               options[:class] = [options[:class], "#{HTML_CLASSES[selector]}"].compact.join(" ")
 
+              label_class =
+
               description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
-              label_tag       = label(method, options.delete(:label), :class => "label")
+              label_tag       = field_label(method, extract_options(:label_class, options))
               field_tag       = #{selector}_without_label(method, options)
 
               # Applies fieldWithErrors
               label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
-              group do
+              group(extract_options(:group_class, options)) do
                 (label_tag + field_tag + description_tag).html_safe
               end
             else
@@ -68,13 +70,13 @@ module Manageable
       def select(method, choices, options = {}, html_options = {})
         unless options[:label]
           description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
-          label_tag       = label(method, options.delete(:label), :class => "label")
+          label_tag       = field_label(method, extract_options(:label_class, options))
           field_tag       = super(method, choices, options, html_options)
 
           # Applies fieldWithErrors
           label_tag = @@field_with_errors_proc.call(method, label_tag, @object, @template)
 
-          group do
+          group(extract_options(:group_class, options)) do
             (label_tag + field_tag + description_tag).html_safe
           end
         else
@@ -102,10 +104,28 @@ module Manageable
         end
       end
 
-      def group
-        @template.content_tag(:div, :class => "group") do
+      def group(options = {})
+        css_class = ["group", options.delete(:class)]
+        css_class << "required" if options[:required]
+
+        @template.content_tag(:div, :class => css_class.compact.join(" ")) do
           yield
         end
+      end
+
+      def field_label(method, options = {})
+        text = options.delete(:label)
+        text << t("active_model.required") if options[:required] && text.present?
+        css_class = ["label", options.delete(:class)]
+        label(method, text, :class => css_class.compact.join(" "))
+      end
+
+      private
+
+      def extract_options(class_option, options)
+        label_options = options.slice(:required)
+        label_options[:class] = options[class_option]
+        label_options
       end
     end
   end
