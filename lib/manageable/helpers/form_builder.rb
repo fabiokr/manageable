@@ -46,8 +46,6 @@ module Manageable
             unless options[:label]
               options[:class] = [options[:class], "#{HTML_CLASSES[selector]}"].compact.join(" ")
 
-              label_class =
-
               description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
               label_tag       = field_label(method, extract_options(:label_class, options))
               field_tag       = #{selector}_without_label(method, options)
