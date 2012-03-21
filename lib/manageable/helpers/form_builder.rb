@@ -43,11 +43,11 @@ module Manageable
         :file_field, :text_area].each do |selector|
         class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
           def #{selector}_with_label(method, options = {})
-            unless options[:label]
+            unless options[:label] == false
               options[:class] = [options[:class], "#{HTML_CLASSES[selector]}"].compact.join(" ")
 
               description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
-              label_tag       = field_label(method, extract_options(:label_class, options))
+              label_tag       = field_label(method, options.delete(:label), extract_options(:label_class, options))
               field_tag       = #{selector}_without_label(method, options)
 
               # Applies fieldWithErrors
@@ -66,9 +66,9 @@ module Manageable
       end
 
       def select(method, choices, options = {}, html_options = {})
-        unless options[:label]
+        unless options[:label] == false
           description_tag = @template.content_tag(:span, options.delete(:description), :class => "description") if options[:description].present?
-          label_tag       = field_label(method, extract_options(:label_class, options))
+          label_tag       = field_label(method, options.delete(:label), extract_options(:label_class, options))
           field_tag       = super(method, choices, options, html_options)
 
           # Applies fieldWithErrors
@@ -111,8 +111,7 @@ module Manageable
         end
       end
 
-      def field_label(method, options = {})
-        text = options.delete(:label)
+      def field_label(method, text, options = {})
         text << t("active_model.required") if options[:required] && text.present?
         css_class = ["label", options.delete(:class)]
         label(method, text, :class => css_class.compact.join(" "))
