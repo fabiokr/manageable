@@ -1,7 +1,6 @@
 require "rails"
 require "jquery-rails"
 require "sass-rails"
-require "attrtastic"
 
 module Manageable
   class Engine < Rails::Engine

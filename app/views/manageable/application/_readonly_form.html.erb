@@ -10,8 +10,8 @@
     <%= attr.attributes do %>
       <%= attr.attribute :id %>
       <%= render "readonly_form_fields", :attr => attr %>
-      <%= attr.left_attribute :created_at %>
-      <%= attr.right_attribute :updated_at %>
+      <%= attr.attribute :created_at, :position => :left %>
+      <%= attr.attribute :updated_at, :position => :right %>
     <% end %>
     <div class="clear"></div>
   <% end %>
