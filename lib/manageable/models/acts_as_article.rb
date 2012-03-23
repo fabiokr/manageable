@@ -13,7 +13,9 @@ module Manageable
         scope :highlighted, lambda { where(:highlight => true) }
         scope :for_slug,    lambda { |param| where(:slug => param) }
         scope :for_locale,  lambda { |locale| where(:locale => locale) }
-        scope :for_published_at, (lambda do |year = nil, month = nil, day = nil|
+        scope :for_published_at, (lambda do |*args|
+          year, month, day = args
+
           if year.nil?
             scoped
           else
