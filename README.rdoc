@@ -1,3 +1,5 @@
+= Manageable {<img src="https://secure.travis-ci.org/fabiokr/manageable.png?branch=master" alt="Build Status" />}[http://travis-ci.org/fabiokr/manageable]
+
 TODO
 
 * Write README
