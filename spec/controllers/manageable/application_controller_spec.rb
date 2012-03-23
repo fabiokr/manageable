@@ -10,19 +10,23 @@ describe Manageable::ApplicationController do
 
     # mock paths
     def paths_custom_collection_path(*args)
-      "the_paths_custom_collection(#{args})"
+      "the_paths_custom_collection(#{args_to_s(args)})"
     end
 
     def paths_custom_resource_path(*args)
-      "the_paths_custom_resource(#{args})"
+      "the_paths_custom_resource(#{args_to_s(args)})"
     end
 
     def new_paths_custom_resource_path(*args)
-      "the_new_paths_custom_resource(#{args})"
+      "the_new_paths_custom_resource(#{args_to_s(args)})"
     end
 
     def edit_paths_custom_resource_path(*args)
-      "the_edit_paths_custom_resource(#{args})"
+      "the_edit_paths_custom_resource(#{args_to_s(args)})"
+    end
+
+    def args_to_s(args)
+      args.join(", ")
     end
   end
 
@@ -74,19 +78,19 @@ describe Manageable::ApplicationController do
 
     describe "url_helpers" do
       it "should retrieve #collection_path" do
-        controller.send(:collection_path, 1, 2).should == "the_paths_custom_collection([1, 2])"
+        controller.send(:collection_path, 1, 2).should == "the_paths_custom_collection(1, 2)"
       end
 
       it "should retrieve #resource_path" do
-        controller.send(:resource_path, 1, 2).should == "the_paths_custom_resource([1, 2])"
+        controller.send(:resource_path, 1, 2).should == "the_paths_custom_resource(1, 2)"
       end
 
       it "should retrieve #new_resource_path" do
-        controller.send(:new_resource_path, 1, 2).should == "the_new_paths_custom_resource([1, 2])"
+        controller.send(:new_resource_path, 1, 2).should == "the_new_paths_custom_resource(1, 2)"
       end
 
       it "should retrieve #edit_collection_path" do
-        controller.send(:edit_resource_path, 1, 2).should == "the_edit_paths_custom_resource([1, 2])"
+        controller.send(:edit_resource_path, 1, 2).should == "the_edit_paths_custom_resource(1, 2)"
       end
     end
   end

@@ -1,5 +1,5 @@
-shared_examples_for 'acts_as_article' do |options = {}|
-
+shared_examples_for 'acts_as_article' do |*args|
+  options = args.first || {}
   options = {:factory => described_class.name.downcase.to_sym}.merge(options)
 
   it { should have_db_column(:slug).of_type(:string) }
