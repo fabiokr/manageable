@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Fabio Kreusch"]
   s.email       = ["fabiokr@gmail.com"]
   s.homepage    = "https://github.com/fabiokr/manageable"
-  s.summary     = "An administration engine"
-  s.description = "An administration engine"
+  s.summary     = "An unobtrusive Rails administration engine"
+  s.description = "An unobtrusive Rails administration engine"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc", "CHANGELOG.rdoc"]
   s.test_files = Dir['spec/**/*']
