@@ -9,14 +9,14 @@ describe ActionView::Helpers::FormHelper do
       @telephone_field = f.telephone_field(:name)
       @url_field = f.url_field(:name)
       @email_field = f.email_field(:name)
-      @number_field = f.number_field(:name)
-      @range_field = f.range_field(:name)
+      @number_field = f.number_field(:name, :size => nil)
+      @range_field = f.range_field(:name, :size => nil)
       @file_field = f.file_field(:name)
       @text_area = f.text_area(:name)
       @check_box = f.check_box(:name)
       @radio_button = f.radio_button(:name, "Yes")
       @group = f.group { "thegroup" }
-      @button = f.button("Save")
+      @button = f.button("Save", :name => "Save", :type => :submit)
     end
   end
 
@@ -69,6 +69,6 @@ describe ActionView::Helpers::FormHelper do
   end
 
   it "should print button" do
-    @button.should == '<button class="button"><img alt="Save" src="/assets/manageable/icons/tick.png" />&nbsp;Save</button>'
+    @button.should == '<button class="button" name="Save" type="submit"><img alt="Save" src="/assets/manageable/icons/tick.png" />&nbsp;Save</button>'
   end
 end
