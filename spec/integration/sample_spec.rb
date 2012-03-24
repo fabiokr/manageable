@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SamplesController, :js => true do
+describe SamplesController do
 
   it "should work with all rest actions" do
     visit "/samples"
