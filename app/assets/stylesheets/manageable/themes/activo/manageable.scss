@@ -1,3 +1,8 @@
+.flash .alert {
+  border: 1px solid #bb9004;
+  background: #f9c006 url("/assets/manageable/messages/warning.png") no-repeat 10px center;
+}
+
 .field_with_errors, .fieldWithErrors {
   display: inline;
 }

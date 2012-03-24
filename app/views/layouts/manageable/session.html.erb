@@ -14,7 +14,7 @@
       <div id="<%= manageable_sidebar.present? ? 'main' : 'full-main' %>">
         <div id="box">
           <div class="flash">
-            <% [ :warning, :notice, :error ].each do |f| -%>
+            <% [ :warning, :alert, :notice, :error ].each do |f| -%>
               <%= content_tag("div", "<p>#{flash[f]}</p>".html_safe, :class => "message #{f}") unless flash[f].nil? %>
             <% end %>
           </div>
