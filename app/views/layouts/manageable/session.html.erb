@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title><%= content_for?(:title) ? yield(:title) : manageable_page_title %></title>
-  <%= stylesheet_link_tag "manageable.css", :media => "screen" %>
+  <%= stylesheet_link_tag "manageable/index.css", :media => "screen" %>
   <%= csrf_meta_tag %>
   <%= manageable_head %>
 </head>
@@ -25,6 +25,6 @@
     </div>
   </div>
 
-  <%= javascript_include_tag 'manageable.js' %>
+  <%= javascript_include_tag 'manageable/index.js' %>
 </body>
 </html>
