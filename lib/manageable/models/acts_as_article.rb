@@ -20,11 +20,11 @@ module Manageable
             scoped
           else
             beginning_date, end_date = if month.nil? && day.nil?
-              [Date.new(year.to_i).beginning_of_year, Date.new(year.to_i).end_of_year]
+              [DateTime.new(year.to_i).beginning_of_year, DateTime.new(year.to_i).end_of_year]
             elsif day.nil?
-              [Date.new(year.to_i, month.to_i).beginning_of_month, Date.new(year.to_i, month.to_i).end_of_month]
+              [DateTime.new(year.to_i, month.to_i).beginning_of_month, DateTime.new(year.to_i, month.to_i).end_of_month]
             else
-              [Date.new(year.to_i, month.to_i, day.to_i).beginning_of_day, Date.new(year.to_i, month.to_i, day.to_i).end_of_day]
+              [DateTime.new(year.to_i, month.to_i, day.to_i).beginning_of_day, DateTime.new(year.to_i, month.to_i, day.to_i).end_of_day]
             end
 
             where("published_at >= ? AND published_at <= ?", beginning_date, end_date)
