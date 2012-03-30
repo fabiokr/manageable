@@ -58,6 +58,7 @@ You will probably want to have you own set of table headers for your index actio
   * _form_fields.html.erb
 
 There is a whole set of partials that you can just replace if it does not suite your needs. You can check the existing ones under the 'app/views/manageable/application' folder inside the Manageable gem. If you need a totally custom 'index.html.erb', you can just replace it as well.
+
 The other one thing that is needed is to define a simple resource configuration with the manageable_configuration method, as we have done in our example. That way the default views will know what path helpers it should use. You have also to use respond_with in your actions, because the views resource will be infered from what you return with respond_with.
 
 If you will not be using the default views, there is no need for that.
