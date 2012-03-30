@@ -56,10 +56,11 @@ By default, controllers inheriting from Manageable::ApplicationController will l
 
 Manageable provide a whole stack of views for you index, show, new and edit actions. When you access you controller is should work with the default configurations.
 You will probably want to have you own set of table headers for your index action, or your custom set of fields on you forms. In order to do that, you can just replace the partials your you views folder. In this case, you would need to create these files under 'app/views/admin/articles':
-  * _index_headers.html.erb
-  * _index_rows.html.erb
-  * _readonly_form_fields.html.erb
-  * _form_fields.html.erb
+  
+* _index_headers.html.erb
+* _index_rows.html.erb
+* _readonly_form_fields.html.erb
+* _form_fields.html.erb
 
 There is a whole set of partials that you can just replace if it does not suite your needs. You can check the existing ones under the 'app/views/manageable/application' folder inside the Manageable gem. If you need a totally custom 'index.html.erb', you can just replace it as well.
 
@@ -96,9 +97,9 @@ Manageable forms use the custom Manageable::Helpers::FormBuilder by default. Tha
 
 Because articles tend to be a common model, Manageable provides the following tools to deal with them:
 
-  * Manageable::Models::ActsAsArticle - just include this in your article model and it will have a basic set of common article operations.
-  * lib/manageable/spec/models/articles - this is a shared spec to be used with rspec; include it in your spec_helper.rb file and use 'it_behaves_like "acts_as_article"' in your model spec. This requires factory_girl and shoulda_matchers. If do not want to use Rspec or these gems, you can create a custom test file following those lines.
-  * db/migrate/create_articles.rb - a migration to create an article model. Use 'rake manageable_engine:install:migrations' in your application to have it copied to your app. You can then customize it to your own needs.
+* Manageable::Models::ActsAsArticle - just include this in your article model and it will have a basic set of common article operations.
+* lib/manageable/spec/models/articles - this is a shared spec to be used with rspec; include it in your spec_helper.rb file and use 'it_behaves_like "acts_as_article"' in your model spec. This requires factory_girl and shoulda_matchers. If do not want to use Rspec or these gems, you can create a custom test file following those lines.
+* db/migrate/create_articles.rb - a migration to create an article model. Use 'rake manageable_engine:install:migrations' in your application to have it copied to your app. You can then customize it to your own needs.
 
 === I18n
 
@@ -126,11 +127,13 @@ Now you can run the specs with this:
 === Extensions
 
 ManageableContent - https://github.com/fabiokr/manageable_content
+
 Manageable Content is a Rails 3.1 Engine that provides a simple framework for content management. It works by providing a Page instance for each of your configured controllers, so that each controller can have it’s own contents that will be available to the views. You can also have shared contents.
 
 == Credits
 
 https://dmfrancisco.github.com/activo/ for the awesome Activo theme!
+
 https://github.com/jellybob/activo-rails for the inspiration
 
 == Contributors
