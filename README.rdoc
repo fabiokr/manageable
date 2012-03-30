@@ -66,7 +66,7 @@ If you will not be using the default views, there is no need for that.
 === Pagination
 
 When you run your resources controller for the first time, you will receive an exception about the pagination partial. Because Manageable does not want to impose you a pagination library, you should create your own pagination partial that will use the library you want.
-To do that in our example, you will need to create an 'app/views/admin/application/_index_pagination.html.erb' file and insert your custom pagination content. Manageable provides a pagination helper, so as example for Kaminari, you might want to replace it's content with this:
+To do that in our example, you will need to create an 'app/views/admin/application/_index_pagination.html.erb' file and insert your custom pagination content. Manageable provides a pagination helper, so as an example for Kaminari, you might want to replace it's content with this:
 
     <%= manageable_pagination :current_page => collection.current_page, :num_pages => collection.num_pages %>
 
@@ -103,6 +103,7 @@ Manageable can be localized to your language. It provides a default set of local
 === Production
 
 When deploying an application using Manageable to production, you will need to tell Rails to generate Manageable assets if you will be using the "rake assets:precompile" command.
+
 Just add this to your 'config/environments/production.rb' file:
 
     config.assets.precompile += %w( manageable/index.css manageable/index.js )
