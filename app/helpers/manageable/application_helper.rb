@@ -212,12 +212,17 @@ module Manageable
     # *title*:  - The link title
     # *options*: - Additional link_to options
     def manageable_sortable(column, title = nil, options = {})
-      title   ||= column.titleize
-      css_class = column && sort_column && column.to_sym == sort_column.to_sym ? "sort_#{sort_direction}" : nil
-      direction = column && sort_column && column.to_sym == sort_column.to_sym && sort_direction == "asc" ? "desc" : "asc"
-      options[:class] = [options[:class], css_class].compact.join(" ")
+      title ||= column.titleize
 
-      link_to title, params.merge(:sort => column, :direction => direction, :page => nil), options
+      if respond_to?(:sort_column) && respond_to?(:sort_direction)
+        css_class = column && sort_column && column.to_sym == sort_column.to_sym ? "sort_#{sort_direction}" : nil
+        direction = column && sort_column && column.to_sym == sort_column.to_sym && sort_direction == "asc" ? "desc" : "asc"
+        options[:class] = [options[:class], css_class].compact.join(" ")
+
+        link_to title, params.merge(:sort => column, :direction => direction, :page => nil), options
+      else
+        title
+      end
     end
 
     # Creates a link_to button
