@@ -1,14 +1,140 @@
 = Manageable {<img src="https://secure.travis-ci.org/fabiokr/manageable.png?branch=master" alt="Build Status" />}[http://travis-ci.org/fabiokr/manageable]
 
-TODO
+Manageable is a Rails >= 3.1 Engine that provides unobtrusive administration features for Rails applications.
+As it is a Rails engine, you can easily include/replace all of its features, and you will be developing it as you are already used to develop normal Rails applications.
+It has a minimal set of dependencies and does not force you on using other specific gems. People have their prefered set of utility gems (simple_form vs formtastic, will_paginate vs kaminari), so it tries not to impose anything on those lines, and you can choose what you want to use. By default, it provides a custom set of helpers for the most common operations.
 
-* Write README
-* Write examples
-* write about the pagination file
-* write about lib/manageable/models/acts_as_article
-* write about lib/manageable/spec/models/articles | requires factory girl and rspec and shoulda-matchers
-* write about the db migration that generates a base article to be used with lib/manageable/models/acts_as_article
-  rake manageable_engine:install:migrations
-* write about
-  Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( manageable/index.css manageable/index.js )
+== Contributing
+
+This engine is a work in progress and open for contributions! Please don't forget to add tests if you plan on contributing.
+
+== Installation
+
+This gem is compatible with Rails > 3.1. To install it, add the following to your Gemfile:
+
+   gem 'manageable'
+
+After that, run the 'bundle' command to install the gem.
+
+The next thing you want to do is to create an application controller for your administration section that inherits Manageable::ApplicationController:
+
+    class Admin::ApplicationController < Manageable::ApplicationController
+      protect_from_forgery
+    end
+
+And that's it! This will make your administration controllers use Manageable the layout and views by default, and you can replace them as needed.
+Nothing else is imposed. You can name your Admin::ApplicationController the way you want, and configure your routes the way you want as well.
+
+== Getting Started
+
+By default, controllers inheriting from Manageable::ApplicationController will look for the views provided by the Manageable engine. Let's say you have this additional controller:
+
+    class Admin::ArticlesController < Admin::ApplicationController
+
+      manageable_configuration Article, :paths => {
+        :collection => :admin_articles,
+        :resource => :admin_article,
+        :new_resource => :new_admin_article,
+        :edit_resource => :edit_admin_article
+      }
+
+      def index
+      end
+
+      def show
+      end
+
+      def new
+      end
+
+      ...
+    end
+
+Manageable provide a whole stack of views for you index, show, new and edit actions. When you access you controller is should work with the default configurations.
+You will probably want to have you own set of table headers for your index action, or your custom set of fields on you forms. In order to do that, you can just replace the partials your you views folder. In this case, you would need to create these files under 'app/views/admin/articles':
+  * _index_headers.html.erb
+  * _index_rows.html.erb
+  * _readonly_form_fields.html.erb
+  * _form_fields.html.erb
+
+There is a whole set of partials that you can just replace if it does not suite your needs. You can check the existing ones under the 'app/views/manageable/application' folder inside the Manageable gem. If you need a totally custom 'index.html.erb', you can just replace it as well.
+The other one thing that is needed is to define a simple resource configuration with the manageable_configuration method, as we have done in our example. That way the default views will know what path helpers it should use. You have also to use respond_with in your actions, because the views resource will be infered from what you return with respond_with.
+
+If you will not be using the default views, there is no need for that.
+
+=== Pagination
+
+When you run your resources controller for the first time, you will receive an exception about the pagination partial. Because Manageable does not want to impose you a pagination library, you should create your own pagination partial that will use the library you want.
+To do that in our example, you will need to create an 'app/views/admin/application/_index_pagination.html.erb' file and insert your custom pagination content. Manageable provides a pagination helper, so as example for Kaminari, you might want to replace it's content with this:
+
+    <%= manageable_pagination :current_page => collection.current_page, :num_pages => collection.num_pages %>
+
+In case you use other pagination libraries, adapt it accordingly.
+
+Manageable also provides a module called Manageable::Controllers::Pageable. This includes controller helper methods to deal with pagination and sorting. Just include the following line in your controller:
+
+    include Manageable::Controllers::Pageable
+
+Then, in your index action, include something like this:
+
+    respond_with @articles = apply_pageable_scope(Article)
+
+Refer to the module documentation for additional details.
+
+=== Helpers
+
+Please refer to the 'app/helpers/manageable/application_helper.rb' file for helpers documentation.
+
+Manageable forms use the custom Manageable::Helpers::FormBuilder by default. That provides automatic labels for forms and some additional customization. If you don't like that, you can just create your own _form.html.erb partial.
+
+=== The articles module
+
+Because articles tend to be a common model, Manageable provides the following tools to deal with them:
+
+  * Manageable::Models::ActsAsArticle - just include this in your article model and it will have a basic set of common article operations.
+  * lib/manageable/spec/models/articles - this is a shared spec to be used with rspec; include it in your spec_helper.rb file and use 'it_behaves_like "acts_as_article"' in your model spec. This requires factory_girl and shoulda_matchers. If do not want to use Rspec or these gems, you can create a custom test file following those lines.
+  * db/migrate/create_articles.rb - a migration to create an article model. Use 'rake manageable_engine:install:migrations' in your application to have it copied to your app. You can then customize it to your own needs.
+
+=== I18n
+
+Manageable can be localized to your language. It provides a default set of locales, but in case you need a custom one, just add it to your application locales folder coping the contents of an existing locale file and changing it as needed.
+
+=== Production
+
+When deploying an application using Manageable to production, you will need to tell Rails to generate Manageable assets if you will be using the "rake assets:precompile" command.
+Just add this to your 'config/environments/production.rb' file:
+
+    config.assets.precompile += %w( manageable/index.css manageable/index.js )
+
+=== Specs
+
+To run the specs, first you need to setup the dummy application database and clone it for the test environment:
+
+   rake app:db:schema:load
+   rake app:db:test:clone
+
+Now you can run the specs with this:
+
+   rake spec
+
+=== Extensions
+
+ManageableContent - https://github.com/fabiokr/manageable_content
+Manageable Content is a Rails 3.1 Engine that provides a simple framework for content management. It works by providing a Page instance for each of your configured controllers, so that each controller can have it’s own contents that will be available to the views. You can also have shared contents.
+
+== Credits
+
+https://dmfrancisco.github.com/activo/ for the awesome Activo theme!
+https://github.com/jellybob/activo-rails for the inspiration
+
+== Contributors
+
+https://github.com/fabiokr/manageable/contributors
+
+== Maintainers
+
+* Fabio Kreusch (https://github.com/fabiokr)
+
+== License
+
+MIT License. Copyright 2012 Fabio Kreusch http://www.kreusch.com.br
