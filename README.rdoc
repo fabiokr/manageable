@@ -22,7 +22,7 @@ The next thing you want to do is to create an application controller for your ad
       protect_from_forgery
     end
 
-And that's it! This will make your administration controllers use Manageable the layout and views by default, and you can replace them as needed.
+And that's it! This will make your administration controllers use Manageable layout and views by default, and you can replace them as needed.
 Nothing else is imposed. You can name your Admin::ApplicationController the way you want, and configure your routes the way you want as well.
 
 == Getting Started
