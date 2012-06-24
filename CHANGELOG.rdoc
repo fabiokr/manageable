@@ -1,3 +1,7 @@
+== 0.1.3
+
+* Fixed app/views/manageable/application/_index_header.html.erb to use i18n :count for plural version
+
 == 0.1.2
 
 * Fixed published_at scope to filter with DateTime
