@@ -53,8 +53,7 @@ describe ActionView::Helpers::FormHelper do
   end
 
   it "should print labeled text_area" do
-    @text_area.should == '<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div><textarea class="text_area" cols="40" id="fake_model_name" name="fake_model[name]" rows="20">
-</textarea></div>'
+    @text_area.should match(/#{Regexp.escape('<div class="group"><div class="fieldWithErrors"><label class="label" for="fake_model_name">Name</label>&nbsp<span class="error">is required</span></div>')}.+textarea.+/)
   end
 
   it "should print labeled check_box" do
